@@ -1,3 +1,4 @@
+
 services:
   postgres:
     container_name: postgres
@@ -5,7 +6,7 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PW}
-      - POSTGRES_DB=${POSTGRES_DB} #optional (specify default database instead of $POSTGRES_DB)
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     restart: always
@@ -20,4 +21,10 @@ services:
       - "5050:80"
     restart: always
 
-    
+  mongo:
+    restart: always
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
