@@ -7,17 +7,20 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
 
     async getAllPeriodistas(): Promise<Periodista[] | undefined> {
        
+        
         try{
-            const consulta = await executeQuery(`SELECT * FROM public.periodistas;`);
-
-            const periodistas: Periodista [] = consulta.rows.map((row:any)=>{
-                return{
-                    id: row.id,
-                    name: row.name,
-                    birthday: row.birthday
-                };
-            });
-            console.log(periodistas);
+            const periodistas: Periodista[] = [];
+            const consulta = `SELECT * FROM public.periodistas`;
+            const periodistasFromDB: any [] = await executeQuery(consulta);
+            for (const item of periodistasFromDB){
+                const periodista: Periodista = {
+                    id:item.id,
+                    name: item.name,
+                    birthday: item.birthday
+                }
+                periodistas.push(periodista);
+            }
+        
             return periodistas;
         }catch (error){
             console.log('No se pueden sacar los periodistas:', error);
@@ -26,8 +29,28 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     }
 
 
-    getPeriodistabyID(id: string): Promise<Periodista | undefined> {
-        throw new Error("Method not implemented.");
+    async getPeriodistabyID(id: string): Promise<Periodista | undefined> {
+
+        const periodista : Periodista = {
+            id:"",
+            name:"",
+            birthday:""
+        }
+
+
+        const consulta = `SELECT * FROM public.periodistas where id='${id}'`;
+
+        const periodistaFromDB: any[] = await executeQuery(consulta);
+        if(periodistaFromDB.length>0){
+
+            const item = periodistaFromDB[0];
+            periodista.id = item.id,
+            periodista.name = item.name;
+            periodista.birthday = item.birthday;
+        }
+
+        return periodista;
+
     }
     createPeriodista(periodista: any): Promise<Periodista | undefined> {
         throw new Error("Method not implemented.");
