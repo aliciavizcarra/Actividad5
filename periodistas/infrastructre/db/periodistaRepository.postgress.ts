@@ -52,6 +52,7 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
         return periodista;
 
     }
+    
     createPeriodista(periodista: any): Promise<Periodista | undefined> {
         throw new Error("Method not implemented.");
     }
