@@ -9,17 +9,10 @@ createMongoConnection();
 dotenv.config();
 
 const app = express();
-app.use(express.json())
-app.set('view engine', 'ejs');
-app.set('views', './src/views');
-
 const port = process.env.PORT;
-const allowedOrigins = ["*"];
 
-
-
+app.use(express.json())
 app.use("/periodistas/", routerPeriodistas);
-
 app.use("/noticias/",routerNoticias)
 
 app.listen(process.env.PORT, () => {
