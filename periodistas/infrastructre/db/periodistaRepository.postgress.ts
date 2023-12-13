@@ -8,17 +8,20 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     async getAllPeriodistas(): Promise<Periodista[] | undefined> {
        
         try{
-            const consulta = await executeQuery(`SELECT * FROM public.periodistas;`);
+            const periodistas: Periodista[] = [];
+            const consulta = `SELECT * FROM public.periodistas`;
+            const periodistasFromDB: any [] = await executeQuery(consulta);
+            for (const item of periodistasFromDB){
+                const periodista: Periodista = {
+                    id:item.id,
+                    name: item.name,
+                    birthday: item.birthday
+                }
+                periodistas.push(periodista)
+            }
 
-            const periodistas: Periodista [] = consulta.rows.map((row:any)=>{
-                return{
-                    id: row.id,
-                    name: row.name,
-                    birthday: row.birthday
-                };
-            });
-            console.log(periodistas);
             return periodistas;
+
         }catch (error){
             console.log('No se pueden sacar los periodistas:', error);
             return undefined;
