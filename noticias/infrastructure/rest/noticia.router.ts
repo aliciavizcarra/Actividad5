@@ -29,4 +29,30 @@ router.get("/:id", async (req,res)=>{
     }
 })
 
+router.get("/",async(req,res)=>{
+    try{
+        const noticias = await noticiaUseCases.getAllNoticias();
+        res.json(noticias);
+    }catch(error){
+        console.log(error)
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+router.delete("/:id", async (req,res)=>{
+    try{
+
+        const noticiaID = req.params.id;
+        const noticiaBorrada = await noticiaUseCases.deleteNoticia(noticiaID);
+        if(noticiaBorrada){
+            res.json("Noticia eliminada con exito")
+        }else{
+            res.status(404).json({error: "Noticia no encontrada"});
+        } 
+    }catch(error){
+        res.status(500).json({error: "Internal Server Error"})
+    }
+})
+
+
 export {router as routerNoticias};
