@@ -11,7 +11,7 @@ router.post("/", async (req, res)=>{
         const noticiaCReada = await noticiaUseCases.createNoticia(newNoticia);
         res.status(201).json(noticiaCReada);
     }catch(error){
-        res.status(500).json({error: "Internal Server Error"});
+        res.status(500).json({error: "Internal Server Error"} );
     }
 })
 
