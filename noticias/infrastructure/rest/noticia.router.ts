@@ -29,15 +29,27 @@ router.get("/:id", async (req,res)=>{
     }
 })
 
-router.get("/",async(req,res)=>{
+router.get("/api/noticias",async(req,res)=>{
     try{
         const noticias = await noticiaUseCases.getAllNoticias();
+        res.render("noticias", {noticias})
         res.json(noticias);
     }catch(error){
         console.log(error)
         res.status(500).json({ error: "Internal Server Error" });
     }
 })
+
+router.get("/",async(req,res)=>{
+    try{
+        const noticias = await noticiaUseCases.getAllNoticias();
+        res.render("noticias", {noticias})
+    }catch(error){
+        console.log(error)
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
 
 router.delete("/:id", async (req,res)=>{
     try{

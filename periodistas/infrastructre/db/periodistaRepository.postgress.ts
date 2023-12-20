@@ -31,26 +31,29 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
 
     async getPeriodistabyID(id: string): Promise<Periodista | undefined> {
 
-        const periodista : Periodista = {
-            id:"",
-            name:"",
-            birthday:""
+        try{
+            const consulta = `SELECT * FROM public.periodistas where id='${id}'`;
+            const periodistaFromDB: any[] = await executeQuery(consulta);
+
+            if(periodistaFromDB.length>0){
+
+                const item = periodistaFromDB[0];
+
+                const periodista : Periodista = {
+                    id:item.id,
+                    name:item.name,
+                    birthday:item.birthday
+                    
+                };
+
+                return periodista;
+            }else{
+                return undefined;
+            }
+            
+        }catch(error){
+            console.error("Error al obtener el periodista por ID:", error);
         }
-
-
-        const consulta = `SELECT * FROM public.periodistas where id='${id}'`;
-
-        const periodistaFromDB: any[] = await executeQuery(consulta);
-        if(periodistaFromDB.length>0){
-
-            const item = periodistaFromDB[0];
-            periodista.id = item.id,
-            periodista.name = item.name;
-            periodista.birthday = item.birthday;
-        }
-
-        return periodista;
-
     }
     
     createPeriodista(periodista: any): Promise<Periodista | undefined> {

@@ -28,5 +28,9 @@ export class NoticiasUseCases{
         return this.noticiasRepository.deleteNoticia(id);
     }
 
+    async getNoticiasDePeriodista(id: string){
+        return this.noticiasRepository.getNoticiasDePeriodista(id);
+    }
+
 
 }

@@ -4,6 +4,18 @@ import Noticia from "../../domain/noticia";
 import NoticiasRepository from "../../domain/noticiaRepository";
 
 export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
+
+
+    async getDatosdelaNoticiabyPeriodista(id: string): Promise<Noticia | undefined> {
+        
+        const noticias = this.getAllNoticias();
+
+        if(!noticias) return undefined;
+
+        noticias.forEach()
+
+    }
+
     
     async getAllNoticias(): Promise<Noticia[] | undefined> {
 
@@ -47,9 +59,7 @@ export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
     }
 
 
-    getDatosdelaNoticiabyPeriodista(id: string): Promise<Noticia | undefined> {
-        throw new Error("Method not implemented.");
-    }
+    
 
     async createNoticia(noticia: any): Promise<Noticia | undefined> {
         

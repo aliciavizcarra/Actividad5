@@ -13,7 +13,9 @@ export class PeriodistaUseCases{
     }
 
     async getPeriodistabyID(id: string){
-        return this.periodistaRepository.getPeriodistabyID(id);
+        const periodista = this.periodistaRepository.getPeriodistabyID(id);
+        //const noticias = this.noticiasRepository.getNoticias(periodista) AQUI CREO UN METODO QUE ME TRAIGA TODAS LAS NOTICIAS QUE TENGAN EL ID DEL PERIODISTA BUSCADO
+        
     }
 
     async createPeriodista(periodista: any){
