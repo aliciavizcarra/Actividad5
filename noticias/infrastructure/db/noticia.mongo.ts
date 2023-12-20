@@ -8,7 +8,7 @@ export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
 
     async getDatosdelaNoticiabyPeriodista(id: string): Promise<Noticia | undefined> {
         
-        const noticias = this.getAllNoticias();
+        const noticias = await this.getAllNoticias();
 
         if(!noticias) return undefined;
 
