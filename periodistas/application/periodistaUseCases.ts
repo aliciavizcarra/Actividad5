@@ -22,8 +22,8 @@ export class PeriodistaUseCases{
         return this.periodistaRepository.createPeriodista(periodista);
     }
 
-    async  updatePeriodista(id: string){
-        return this.periodistaRepository.updatePeriodista(id);
+    async  updatePeriodista(id: string, name: string, birthday: string){
+        return this.periodistaRepository.updatePeriodista(id,name,birthday);
     }
 
     async deletePeriodista(id: string){
