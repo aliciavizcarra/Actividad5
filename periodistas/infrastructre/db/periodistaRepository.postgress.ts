@@ -89,8 +89,21 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     }
 
 
-    deletePeriodista(id: string) {
-        throw new Error("Method not implemented.");
-    }
+    async deletePeriodista(id: string) {
+        try{
 
+            if(id){
+                const consulta = await executeQuery(
+                    `DELETE FROM public.periodistas
+                    WHERE id=${id};`
+                )
+            }
+        }catch(error){
+            console.error(error);
+        }
+
+        const periodistas = await this.getAllPeriodistas();
+        return periodistas;
+
+    }
 }
