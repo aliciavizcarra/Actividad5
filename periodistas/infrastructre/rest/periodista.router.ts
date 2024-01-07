@@ -55,7 +55,17 @@ router.put("/api/:id",async (req: Request, res: Response)=>{
     } 
 });
 
+router.delete("/api/:id", async (req: Request, res: Response)=>{
 
+
+    try{
+        const idPeriodista = req.params.id;
+        const periodistEliminado= await periodistaUseCases.deletePeriodista(idPeriodista);
+        res.status(201).json(periodistEliminado);
+    }catch(error){
+        res.status(500).json({error: "Internal Server Error"} );
+    }
+})
 
 
 export {router as  routerPeriodistas};
