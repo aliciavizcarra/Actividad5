@@ -65,7 +65,7 @@ router.delete("/api/:id", async (req: Request, res: Response)=>{
     }catch(error){
         res.status(500).json({error: "Internal Server Error"});
     }
-})a
+})
 
 
 export {router as  routerPeriodistas};
