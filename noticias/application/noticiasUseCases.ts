@@ -16,10 +16,6 @@ export class NoticiasUseCases{
         return this.noticiasRepository.getNoticiabyID(id);
     }
 
-    async getDatosdelaNoticiabyPeriodista(id:string){
-        return this.noticiasRepository.getDatosdelaNoticiabyPeriodista(id);
-    }
-
     createNoticia(noticia: any){
         return this.noticiasRepository.createNoticia(noticia);
     } 

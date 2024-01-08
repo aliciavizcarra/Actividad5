@@ -6,12 +6,10 @@ export default interface NoticiasRepository{
 
     getNoticiabyID(id: string): Promise<Noticia | undefined>;
 
-    getDatosdelaNoticiabyPeriodista(id:string):  Promise<Noticia | undefined>;
-
     createNoticia(noticia: any): Promise <Noticia | undefined>;
 
     deleteNoticia(id: string): any;
 
-    getNoticiasDePeriodista(id: string): Promise<Noticia | undefined>;
+    getNoticiasDePeriodista(id: string): Promise<Noticia[] | undefined>;
     
 }

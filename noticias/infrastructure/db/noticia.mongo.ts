@@ -6,11 +6,30 @@ import NoticiasRepository from "../../domain/noticiaRepository";
 export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
 
 
-    getDatosdelaNoticiabyPeriodista(id: string): Promise<Noticia | undefined> {
-        throw new Error("Method not implemented.");
-    }
-    getNoticiasDePeriodista(id: string): Promise<Noticia | undefined> {
-        throw new Error("Method not implemented.");
+    async getNoticiasDePeriodista(id: string): Promise<Noticia[] | undefined> {
+        
+        try{
+            const noticias = await this.getAllNoticias();
+            const noticiasPeriodista : Noticia[] = [];
+            if(!noticias) return undefined;
+            for(let noticia of noticias){
+                for(let periodista of noticia.periodistas){
+                    if(periodista.id === id){
+                        const noticiaNueva = {
+                            id:noticia.id,
+                            titulo: noticia.titulo,
+                            texto: noticia.texto,
+                            periodistas: noticia.periodistas,
+                            recursos : noticia.recursos
+                        }
+                        noticiasPeriodista.push(noticiaNueva)
+                    }
+                }
+            }
+            return noticiasPeriodista;
+        }catch (error){
+            console.error(error)
+        }
     }
 
     async getAllNoticias(): Promise<Noticia[] | undefined> {

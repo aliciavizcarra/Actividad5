@@ -29,10 +29,9 @@ router.get("/:id", async (req,res)=>{
     }
 })
 
-router.get("/api/noticias",async(req,res)=>{
+router.get("/",async(req,res)=>{
     try{
         const noticias = await noticiaUseCases.getAllNoticias();
-        res.render("noticias", {noticias})
         res.json(noticias);
     }catch(error){
         console.log(error)
@@ -40,15 +39,6 @@ router.get("/api/noticias",async(req,res)=>{
     }
 })
 
-router.get("/",async(req,res)=>{
-    try{
-        const noticias = await noticiaUseCases.getAllNoticias();
-        res.render("noticias", {noticias})
-    }catch(error){
-        console.log(error)
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-})
 
 
 router.delete("/:id", async (req,res)=>{
@@ -63,6 +53,20 @@ router.delete("/:id", async (req,res)=>{
         } 
     }catch(error){
         res.status(500).json({error: "Internal Server Error"})
+    }
+})
+
+
+router.get("/periodista/:id", async(req,res)=>{
+
+    try{
+        const idPeriodista = req.params.id;
+        const noticiasPeriodista = await  noticiaUseCases.getNoticiasDePeriodista(idPeriodista);
+        console.log(noticiasPeriodista)
+        res.json(noticiasPeriodista);
+
+    }catch(error){
+        console.error(error);
     }
 })
 

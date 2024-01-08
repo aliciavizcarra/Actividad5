@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import {routerPeriodistas} from "./periodistas/infrastructre/rest/periodista.router";
 import { routerNoticias } from "./noticias/infrastructure/rest/noticia.router";
 import createMongoConnection from "./context/mongoConnection";
+import { routerNoticiasRender } from "./noticias/infrastructure/web/noticia.render";
 
 createMongoConnection();
 
@@ -17,7 +18,9 @@ app.set('views', './views');
 
 app.use("/periodistas/", routerPeriodistas);
 
-app.use("/noticias", routerNoticias);
+app.use("/noticias", routerNoticiasRender);
+app.use("/api/noticias", routerNoticias);
+
 
 app.listen(port, () => {
   console.log(`Application started on port ${port}`);

@@ -5,6 +5,6 @@ export default interface Noticia {
     id?: string;
     titulo: string;
     texto: string;
-    periodistas?: Array<Periodista>;
+    periodistas: Array<any>;
     recursos?: Array<Recurso>
 }
