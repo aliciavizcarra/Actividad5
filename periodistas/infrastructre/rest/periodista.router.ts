@@ -3,11 +3,12 @@ import PeriodistasRepository from "../../domain/periostaRepository";
 import PeriodistasRepositoryPostgres from "../db/periodistaRepository.postgress";
 import Periodista from "../../domain/periodista";
 import { PeriodistaUseCases } from "../../application/periodistaUseCases";
+import NoticiaRepositoryMongoDB from "../../../noticias/infrastructure/db/noticia.mongo";
 
 
 const router = express.Router();
 
-const periodistaUseCases: PeriodistaUseCases = new PeriodistaUseCases(new PeriodistasRepositoryPostgres());
+const periodistaUseCases: PeriodistaUseCases = new PeriodistaUseCases(new PeriodistasRepositoryPostgres(), new NoticiaRepositoryMongoDB());
 
 
 
@@ -24,7 +25,7 @@ router.get("/", async (req: Request, res: Response)=>{
 router.get("/:id", async (req: Request, res: Response)=>{
 
     try{
-        const periodistaID = req.params.id;
+        const periodistaID = parseInt(req.params.id);
         const periodistaBuscado = await periodistaUseCases.getPeriodistabyID(periodistaID);
         res.json(periodistaBuscado);
     }catch(error){
@@ -33,7 +34,7 @@ router.get("/:id", async (req: Request, res: Response)=>{
     
 })
 
-router.post("/api/",async (req: Request, res: Response)=>{
+router.post("/",async (req: Request, res: Response)=>{
     try{
         const periodistaNueva: Periodista = req.body;
         const periodista = await periodistaUseCases.createPeriodista(periodistaNueva);
@@ -43,9 +44,9 @@ router.post("/api/",async (req: Request, res: Response)=>{
     }
 });
 
-router.put("/api/:id",async (req: Request, res: Response)=>{
+router.put("/:id",async (req: Request, res: Response)=>{
     try{
-        const idPeriodista = req.params.id;
+        const idPeriodista = parseInt(req.params.id);
         const periodistaBuscado = req.body;
         const periodistaActualizado = await periodistaUseCases.updatePeriodista(idPeriodista,periodistaBuscado.name, periodistaBuscado.birthday);
 
@@ -55,7 +56,7 @@ router.put("/api/:id",async (req: Request, res: Response)=>{
     } 
 });
 
-router.delete("/api/:id", async (req: Request, res: Response)=>{
+router.delete("/:id", async (req: Request, res: Response)=>{
 
 
     try{

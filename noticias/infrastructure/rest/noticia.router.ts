@@ -60,7 +60,7 @@ router.delete("/:id", async (req,res)=>{
 router.get("/periodista/:id", async(req,res)=>{
 
     try{
-        const idPeriodista = req.params.id;
+        const idPeriodista = parseInt(req.params.id);
         const noticiasPeriodista = await  noticiaUseCases.getNoticiasDePeriodista(idPeriodista);
         console.log(noticiasPeriodista)
         res.json(noticiasPeriodista);

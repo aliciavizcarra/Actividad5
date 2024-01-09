@@ -24,7 +24,7 @@ export class NoticiasUseCases{
         return this.noticiasRepository.deleteNoticia(id);
     }
 
-    async getNoticiasDePeriodista(id: string){
+    async getNoticiasDePeriodista(id: number){
         return this.noticiasRepository.getNoticiasDePeriodista(id);
     }
 

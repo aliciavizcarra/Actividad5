@@ -6,15 +6,22 @@ import NoticiasRepository from "../../domain/noticiaRepository";
 export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
 
 
-    async getNoticiasDePeriodista(id: string): Promise<Noticia[] | undefined> {
+    async getNoticiasDePeriodista(id: number): Promise<Noticia[] | undefined> {
+        console.log(id);
         
         try{
             const noticias = await this.getAllNoticias();
             const noticiasPeriodista : Noticia[] = [];
             if(!noticias) return undefined;
             for(let noticia of noticias){
+                console.log(noticia);
+                               
                 for(let periodista of noticia.periodistas){
+                    console.log(periodista);
+                    
                     if(periodista.id === id){
+                        console.log("entro");
+                        
                         const noticiaNueva = {
                             id:noticia.id,
                             titulo: noticia.titulo,
@@ -43,7 +50,7 @@ export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
                 id: String(noticiaFromDB._id),
                 titulo: String(noticiaFromDB.titulo),
                 texto:String(noticiaFromDB.texto),
-                periodistas:Array(noticiaFromDB.periodistas),
+                periodistas:noticiaFromDB.periodistas,
                 recursos:Array(noticiaFromDB.recursos)
             }
 

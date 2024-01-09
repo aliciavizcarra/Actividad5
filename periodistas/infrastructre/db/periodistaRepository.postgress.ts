@@ -17,7 +17,8 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
                 const periodista: Periodista = {
                     id:item.id,
                     name: item.name,
-                    birthday: item.birthday
+                    birthday: item.birthday,
+                    noticias: item.noticias
                 }
                 periodistas.push(periodista);
             }
@@ -30,12 +31,12 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     }
 
 
-    async getPeriodistabyID(id: string): Promise<Periodista | undefined> {
+    async getPeriodistabyID(id: number): Promise<Periodista | undefined> {
 
         try{
             const consulta = `SELECT * FROM public.periodistas where id='${id}'`;
             const periodistaFromDB: any[] = await executeQuery(consulta);
-
+            if(!periodistaFromDB) return undefined;
             if(periodistaFromDB.length>0){
 
                 const item = periodistaFromDB[0];
@@ -43,15 +44,11 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
                 const periodista : Periodista = {
                     id:item.id,
                     name:item.name,
-                    birthday:item.birthday
-                    
+                    birthday:item.birthday,
+                    noticias: item.noticias
                 };
-
                 return periodista;
-            }else{
-                return undefined;
             }
-            
         }catch(error){
             console.error("Error al obtener el periodista por ID:", error);
         }
@@ -70,7 +67,7 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     }
 
 
-    async updatePeriodista(id: string, name: string, birthday: string): Promise<Periodista | undefined> {
+    async updatePeriodista(id: number, name: string, birthday: string): Promise<Periodista | undefined> {
         try{
 
             if(id){
