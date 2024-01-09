@@ -86,7 +86,7 @@ export default class PeriodistasRepositoryPostgres implements PeriodistasReposit
     }
 
 
-    async deletePeriodista(id: string) {
+    async deletePeriodista(id: number) {
         try{
 
             if(id){

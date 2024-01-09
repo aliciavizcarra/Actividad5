@@ -39,10 +39,18 @@ export class PeriodistaUseCases{
         return this.periodistaRepository.updatePeriodista(id,name,birthday);
     }
 
-    async deletePeriodista(id: string){
+    async deletePeriodista(id: number){
+
+        let noticiasPeriodista = await this.noticiasRepository.getNoticiasDePeriodista(id);
+        if(noticiasPeriodista){
+            noticiasPeriodista.forEach(element => {
+                if(element.periodistas.length===1){
+                    this.noticiasRepository.deleteNoticia(element.id)
+                }
+            });
+        }
+        
         return this.periodistaRepository.deletePeriodista(id);
     }
-
-
 
 }

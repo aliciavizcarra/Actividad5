@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias de Periodista</title>
+</head>
+<body>
+    <h1>Noticias del periodista <%=idPeriodista%></h1>
+    <%
+        noticias.forEach((noticia)=>{
+            %><h3>Titulo:</h3>%>
+            <p><%=noticia.titulo%></p><%
+                
+            %><h3>Descripción de la noticia:</h3>%>
+            %><p><%=noticia.texto%></p><%
+        })
+    %>  
+</body>
+</html>

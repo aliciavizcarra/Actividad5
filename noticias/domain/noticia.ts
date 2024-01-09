@@ -2,7 +2,7 @@ import Periodista from "../../periodistas/domain/periodista";
 import Recurso from "./recurso";
 
 export default interface Noticia {
-    id?: string;
+    id: string;
     titulo: string;
     texto: string;
     periodistas: Array<any>;

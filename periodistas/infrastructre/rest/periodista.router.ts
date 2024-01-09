@@ -60,7 +60,7 @@ router.delete("/:id", async (req: Request, res: Response)=>{
 
 
     try{
-        const idPeriodista = req.params.id;
+        const idPeriodista = parseInt(req.params.id);
         const periodistEliminado= await periodistaUseCases.deletePeriodista(idPeriodista);
         res.status(201).json(periodistEliminado);
     }catch(error){
