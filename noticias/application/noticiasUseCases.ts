@@ -20,7 +20,19 @@ export class NoticiasUseCases{
         return this.noticiasRepository.createNoticia(noticia);
     } 
 
-    deleteNoticia(id: string){
+    async deleteNoticia(id: string){
+        try{
+            let noticiaBuscada = await this.getNoticiabyID(id);
+            if(noticiaBuscada){
+                if(noticiaBuscada.recursos){
+                    noticiaBuscada.recursos.forEach(element => {
+                        this.noticiasRepository.deleteRecurso(element.id)
+                    });
+                }
+            } 
+        }catch(error){
+            console.error(error);
+        }
         return this.noticiasRepository.deleteNoticia(id);
     }
 

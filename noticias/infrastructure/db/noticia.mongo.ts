@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { collections } from "../../../context/mongoConnection";
 import Noticia from "../../domain/noticia";
 import NoticiasRepository from "../../domain/noticiaRepository";
+import executeQuery from "../../../context/postgresConnection";
 
 export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
 
@@ -101,4 +102,43 @@ export default class NoticiaRepositoryMongoDB implements NoticiasRepository{
 
     }
 
+    async getNoticiasDeRecurso(idRecurso: string): Promise<Noticia[] | undefined> {
+
+        try{
+            const noticias = await this.getAllNoticias();
+            const noticiasRecursos : Noticia[] = [];
+            if(!noticias) return undefined;
+            for(let noticia of noticias){
+                if(noticia.recursos){
+                    for(let recurso of noticia.recursos){
+                        if(recurso.id === idRecurso){ 
+                            const noticiaNueva = {
+                                id:noticia.id,
+                                titulo: noticia.titulo,
+                                texto: noticia.texto,
+                                periodistas: noticia.periodistas,
+                                recursos : noticia.recursos
+                            }
+                            noticiasRecursos.push(noticiaNueva)
+                        }
+                    }
+                }          
+                
+            }
+            return noticiasRecursos;
+        }catch (error){
+            console.error(error)
+        }
+    }
+
+    async deleteRecurso(idRecurso: string){
+        try{
+            let noticiasRecursos = await this.getNoticiasDeRecurso(idRecurso);
+            if(noticiasRecursos?.length === 1){
+                const consulta = await executeQuery (`DELETE FROM public.recursos WHERE id=${idRecurso}`)
+            }
+        }catch (error){
+            console.error(error)
+        }
+    }
 }

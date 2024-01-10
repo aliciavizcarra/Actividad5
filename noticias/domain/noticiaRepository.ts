@@ -11,5 +11,7 @@ export default interface NoticiasRepository{
     deleteNoticia(id: string): any;
 
     getNoticiasDePeriodista(id: number): Promise<Noticia[] | undefined>;
+
+    deleteRecurso(idRecurso: string): any;
     
 }
